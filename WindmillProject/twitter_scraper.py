@@ -20,8 +20,8 @@ def get_string():
 
 def get_twitter():
         chrome_options = Options()
-        #chrome_options.add_argument("--headless")
-        browser = webdriver.Chrome(chrome_options=chrome_options)
+        # chrome_options.add_argument("--headless")
+        browser = webdriver.Chrome(options=chrome_options)
         url = "https://twitter.com/search?q=%23Windmolens&src=typd&lang=nl"
         browser.get(url)
         time.sleep(1)
