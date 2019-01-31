@@ -28,7 +28,7 @@ def get_twitter():
 
         body = browser.find_element_by_tag_name('body')
 
-        for i in range(500):
+        for i in range(100):
             body.send_keys(Keys.PAGE_DOWN)
 
         tweets = browser.find_elements_by_class_name('tweet-text')

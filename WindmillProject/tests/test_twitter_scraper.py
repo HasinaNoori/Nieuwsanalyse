@@ -1,9 +1,4 @@
-"""
-You can auto-discover and run all tests with this command:
-
-    py.test
-
-Documentation: https://docs.pytest.org/en/latest/
-"""
-
+import os
 from WindmillProject import twitter_scraper
+
+
