@@ -20,7 +20,7 @@ def get_string():
 
 def get_twitter():
         chrome_options = Options()
-        #chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         browser = webdriver.Chrome(chrome_options=chrome_options)
         url = "https://twitter.com/search?q=%23Windmolens&src=typd&lang=nl"
         browser.get(url)
@@ -33,7 +33,7 @@ def get_twitter():
 
         tweets = browser.find_elements_by_class_name('tweet-text')
 
-        file = open("tweets.csv", mode="w", encoding="utf-16")
+        file = open("Files/tweets.csv", mode="w", encoding="utf-16")
         for tweet in tweets:
             tweet = tweet.text.replace(',', '').replace('\n', '')
             file.write(tweet+'\n')
