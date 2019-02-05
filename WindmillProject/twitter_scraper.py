@@ -19,25 +19,34 @@ def get_string():
 
 
 def get_twitter():
-        chrome_options = Options()
-        #chrome_options.add_argument("--headless")
-        browser = webdriver.Chrome(chrome_options=chrome_options)
-        url = "https://twitter.com/search?q=%23Windmolens&src=typd&lang=nl"
-        browser.get(url)
-        time.sleep(1)
+    # Setup selenium instance
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    browser = webdriver.Chrome(chrome_options=chrome_options)
+    url = "https://twitter.com/search?q=%23Windmolens&src=typd&lang=nl"
+    browser.get(url)
+    time.sleep(1)
 
-        body = browser.find_element_by_tag_name('body')
+    # Define body and scroll down to load tweets
+    body = browser.find_element_by_tag_name('body')
+    for _ in range(100):
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(0.1)
 
-        for i in range(100):
-            body.send_keys(Keys.PAGE_DOWN)
+    # Get all tweets and dates
+    tweets = browser.find_elements_by_xpath("//p[@class='TweetTextSize  js-tweet-text tweet-text']")
+    dates = browser.find_elements_by_class_name('_timestamp')
 
-        tweets = browser.find_elements_by_class_name('tweet-text')
+    # Write data to csv
+    file = open("Files/tweets.csv", mode="w", encoding="utf-16")
+    for i, tweet in enumerate(tweets):
 
-        file = open("Files/tweets.csv", mode="w", encoding="utf-16")
-        for tweet in tweets:
-            tweet = tweet.text.replace(',', '').replace('\n', '')
-            file.write(tweet+'\n')
-        file.close()
+        # Prepare data for csv
+        date = dates[i].get_attribute("data-time")
+        tweet = tweet.text.replace(',', '').replace('\n', '')
+
+        file.write(f'{date},{tweet}\n')
+    file.close()
 
 
 if __name__ == "__main__":
