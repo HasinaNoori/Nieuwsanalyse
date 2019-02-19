@@ -26,12 +26,22 @@ def get_nu_nl():
 
         scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
         browser.execute_script("arguments[0].click();", scroll_button)
-        container = browser.find_element_by_class_name('featured')
-        articles = container.find_elements_by_class_name('trackevent')
-        print(len(articles))
+        containers = browser.find_elements_by_xpath("//div[@class='block-content clearfix']")
+        for i in containers:
+            print(i)
 
-        for article in articles:
-            print(article.get_attribute('href'))
+        url_list = []
+
+        for container in containers:
+            urls_con = container.find_elements_by_class_name('trackevent')
+            for url_con in urls_con:
+                url_list.append(url_con.get_attribute('href'))
+
+        for url in url_list:
+            browser.get(url)
+            
+            time.sleep(1)
+
 
 
 if __name__ == "__main__":
