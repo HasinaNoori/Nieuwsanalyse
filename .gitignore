@@ -307,8 +307,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Project specific files
-WindmillProject/Data/*
 
 
 # End of https://www.gitignore.io/api/vim,osx,cuda,linux,macos,python,windows,vagrant,intellij,virtualenv,jupyternotebook,visualstudiocode,jupyternotebooks
