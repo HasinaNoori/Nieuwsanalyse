@@ -19,18 +19,16 @@ def main():
 
 def get_nu_nl():
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(options=chrome_options)
     url = "https://www.nu.nl/tag/windmolens"
     browser.get(url)
     time.sleep(1)
 
     # Scroll down to load more articles and find needed elements
-    # scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
-    # browser.execute_script("arguments[0].click();", scroll_button)
+    scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
+    browser.execute_script("arguments[0].click();", scroll_button)
     containers = browser.find_elements_by_xpath("//div[@class='block-content clearfix']")
-    for i in containers:
-        print(i)
 
     # find all the links and make a list
     url_list = []
@@ -48,13 +46,17 @@ def get_nu_nl():
         date = date[:8]
         timestamp = datetime.datetime.strptime(date, "%d-%m-%y").timestamp()
 
-        time.sleep(1)
         # Get content articles and dates
-        content_articles = browser.find_elements_by_xpath("//div[@class='block-content']")
+        content_articles = browser.find_element_by_xpath("//div[@data-type='article.body']")
+        raw_content = content_articles.find_element_by_class_name('block-content')
+        contents = raw_content.find_elements_by_tag_name('p')
+        content_complete = ""
+        for p in contents:
+            content_complete += p.get_attribute('innerHTML')
 
         # Write data to csv
-        
-        file.write(f'{timestamp}\n')
+        content = content_complete.replace(',', '').replace('\n', '')
+        file.write(f'{timestamp},{content}\n')
     file.close()
 
 
