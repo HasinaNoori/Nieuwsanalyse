@@ -37,3 +37,27 @@ $ vagrant ssh
 $ cd /code
 $ pytest --cov=.
 ```
+
+### Tesseract
+
+First download and install the exe from the [Mannheim University Git](https://github.com/UB-Mannheim/tesseract/wiki).
+
+
+Make sure you install it in drive, you going to run your programs on.
+
+Later run this in your favorite CLI:
+
+```
+$ pip install pillow
+$ pip install pytesseract
+```
+
+
+
+For further reading:
+
+
+[www.pyimagesearch.com](https://www.pyimagesearch.com/2017/07/10/using-tesseract-ocr-python/)
+
+[www.developer.ibm.com](https://developer.ibm.com/tutorials/document-scanner/)
+
