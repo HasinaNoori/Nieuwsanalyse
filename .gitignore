@@ -309,6 +309,6 @@ $RECYCLE.BIN/
 
 # Project specific files
 WindmillProject/Data/*
-!WindmillProject/Data/.gitkeep
+
 
 # End of https://www.gitignore.io/api/vim,osx,cuda,linux,macos,python,windows,vagrant,intellij,virtualenv,jupyternotebook,visualstudiocode,jupyternotebooks
