@@ -14,10 +14,6 @@ def main():
     get_twitter()
 
 
-def get_string():
-    return 'Hello world!'
-
-
 def get_twitter():
     # Setup selenium instance
     chrome_options = Options()
@@ -38,9 +34,8 @@ def get_twitter():
     dates = browser.find_elements_by_class_name('_timestamp')
 
     # Write data to csv
-    file = open("Files/tweets.csv", mode="w", encoding="utf-16")
+    file = open("Data/tweets.csv", mode="w", encoding="utf-16")
     for i, tweet in enumerate(tweets):
-
         # Prepare data for csv
         date = dates[i].get_attribute("data-time")
         tweet = tweet.text.replace(',', '').replace('\n', '')
