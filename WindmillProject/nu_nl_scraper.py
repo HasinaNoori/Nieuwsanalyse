@@ -39,7 +39,7 @@ def get_nu_nl():
 
         for url in url_list:
             browser.get(url)
-            
+
             time.sleep(1)
 
 
