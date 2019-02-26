@@ -2,9 +2,7 @@
 
 import time
 import datetime
-
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 
 __author__ = "Your Name"
@@ -25,18 +23,21 @@ def get_nu_nl():
     browser.get(url)
     time.sleep(1)
 
-    # Scroll down to load more articles and find needed elements
-    scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
-    browser.execute_script("arguments[0].click();", scroll_button)
-    containers = browser.find_elements_by_xpath("//div[@class='block-content clearfix']")
+    while len(browser.find_elements_by_link_text("Laad meer artikelen")) > 0:
+        # Scroll down to load more articles and find needed elements
+        scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
+        browser.execute_script("arguments[0].click();", scroll_button)
+        time.sleep(0.1)
 
     # find all the links and make a list
+    containers = browser.find_elements_by_xpath("//div[@class='block-content clearfix']")
     url_list = []
 
     for container in containers:
         urls_con = container.find_elements_by_class_name('trackevent')
         for url_con in urls_con:
             url_list.append(url_con.get_attribute('href'))
+    print(url_list[-1])
 
     file = open("Data/nu_nl.csv", mode="w", encoding="utf-16")
     for url in url_list:
