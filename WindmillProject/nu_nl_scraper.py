@@ -47,6 +47,8 @@ def get_nu_nl():
         date = date[:8]
         timestamp = datetime.datetime.strptime(date, "%d-%m-%y").timestamp()
 
+        article_title = browser.find_element_by_xpath("//h1[@class='title fluid']")
+
         # Get content articles and dates
         content_articles = browser.find_element_by_xpath("//div[@data-type='article.body']")
         raw_content = content_articles.find_element_by_class_name('block-content')
@@ -57,7 +59,8 @@ def get_nu_nl():
 
         # Write data to csv
         content = content_complete.replace(',', '').replace('\n', '')
-        file.write(f'{timestamp},{content}\n')
+        article_title = article_title.text.replace(',', '')
+        file.write(f'{timestamp},{content}, {article_title}\n')
     file.close()
 
 
