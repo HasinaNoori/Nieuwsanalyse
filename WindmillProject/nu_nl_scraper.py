@@ -1,21 +1,15 @@
-# alle urls zoeken met article list pak de url zet onder elkaar en dan alles open
-
 import time
 import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-__author__ = "Your Name"
-__version__ = "0.1.0"
-__license__ = "MIT"
-
 
 def main():
-    """ Main entry point of the app """
     get_nu_nl()
 
 
 def get_nu_nl():
+    # Setup selenium instance
     chrome_options = Options()
     # chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(options=chrome_options)
@@ -23,13 +17,14 @@ def get_nu_nl():
     browser.get(url)
     time.sleep(1)
 
+    # Scroll down until the load more button has reached it's end
     while len(browser.find_elements_by_link_text("Laad meer artikelen")) > 0:
         # Scroll down to load more articles and find needed elements
         scroll_button = browser.find_element_by_link_text('Laad meer artikelen')
         browser.execute_script("arguments[0].click();", scroll_button)
         time.sleep(0.1)
 
-    # find all the links and make a list
+    # find all article links and make a list
     containers = browser.find_elements_by_xpath("//div[@class='block-content clearfix']")
     url_list = []
 
@@ -39,7 +34,10 @@ def get_nu_nl():
             url_list.append(url_con.get_attribute('href'))
     print(url_list[-1])
 
+    # Create and open csv
     file = open("Data/nu_nl.csv", mode="w", encoding="utf-16")
+    # Write header to csv
+    file.write(f'Origin,Timestamp,Title,Content\n')
     for url in url_list:
         browser.get(url)
         date_con = browser.find_element_by_xpath("//span[@class='pubdate small']")

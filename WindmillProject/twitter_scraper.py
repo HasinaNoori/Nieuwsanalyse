@@ -16,7 +16,7 @@ def main():
 def get_twitter():
     # Setup selenium instance
     chrome_options = Options()
-    #chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--headless")
     browser = webdriver.Chrome(options=chrome_options)
     url = "https://twitter.com/search?q=%20windmolen&src=typd&lang=nl"
     browser.get(url)
