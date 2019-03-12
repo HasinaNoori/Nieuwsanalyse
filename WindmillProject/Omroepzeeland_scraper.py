@@ -31,12 +31,12 @@ def get_omroepzeeland():
         for i in range(100):
             body.send_keys(Keys.PAGE_DOWN)
 
-        tweets = browser.find_elements_by_class_name('description')
+        articles = browser.find_elements_by_class_name('description')
 
         file = open("Data/berichten.csv", mode="w", encoding="utf-16")
-        for tweet in tweets:
-            tweet = tweet.text.replace(',', '').replace('\n', '')
-            file.write(tweet+'\n')
+        for articles in articles:
+            articles = articles.text.replace(',', '').replace('\n', '')
+            file.write(articles+'\n')
         file.close()
 3
 
