@@ -37,17 +37,16 @@ def get_nu_nl():
     # Create and open csv
     file = open("Data/nu_nl.csv", mode="w", encoding="utf-16")
     # Write header to csv
-    file.write(f'Origin,Timestamp,Title,Content\n')
+    file.write(f'Origin,Timestamp,Content,Title\n')
     for url in url_list:
         browser.get(url)
+        # Get timestamp article
         date_con = browser.find_element_by_xpath("//span[@class='pubdate small']")
         date = date_con.get_attribute('innerHTML')
         date = date[:8]
         timestamp = datetime.datetime.strptime(date, "%d-%m-%y").timestamp()
 
-        article_title = browser.find_element_by_xpath("//h1[@class='title fluid']")
-
-        # Get content articles and dates
+        # Get content article
         content_articles = browser.find_element_by_xpath("//div[@data-type='article.body']")
         raw_content = content_articles.find_element_by_class_name('block-content')
         contents = raw_content.find_elements_by_tag_name('p')
@@ -55,10 +54,13 @@ def get_nu_nl():
         for p in contents:
             content_complete += p.get_attribute('innerHTML')
 
+        # Get title article
+        article_title = browser.find_element_by_xpath("//h1[@class='title fluid']")
+
         # Write data to csv
         content = content_complete.replace(',', '').replace('\n', '')
         article_title = article_title.text.replace(',', '')
-        file.write(f'{timestamp},{content}, {article_title}\n')
+        file.write(f'nu.nl,{timestamp},{content}, {article_title}\n')
     file.close()
 
 
