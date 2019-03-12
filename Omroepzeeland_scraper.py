@@ -22,7 +22,7 @@ def get_omroepzeeland():
     browser.get(url)
     time.sleep(1)
 
-    # click on next page
+    # click on next page hoi
     nextpage = True
     while nextpage:
         nextpage = goToNextPage(browser)
