@@ -20,32 +20,32 @@ def get_string():
 
 def get_omroepzeeland():
         chrome_options = Options()
-        # chrome_options.add_argument("--headless")
+        #chrome_options.add_argument("--headless")
         browser = webdriver.Chrome(options=chrome_options)
-        url = "https://www.omroepzeeland.nl/zoeken?query=windmolens"
+        url = "https://www.omroepzeeland.nl/zoeken?query=windmolen"
         browser.get(url)
         time.sleep(1)
 
-        # click on next page
-        element = browser.find_element_by_link_text("Volgende").click()
-
-
         body = browser.find_element_by_tag_name('body')
 
+        total_articles = []
+
         for i in range(100):
-            body.send_keys(Keys.PAGE_DOWN)
+            scroll_button = browser.find_element_by_link_text('Volgende')
+            browser.execute_script("arguments[0].click();", scroll_button)
+            articles = browser.find_elements_by_class_name('description')
 
+            for article in articles:
+                total_articles.append(article)
 
-
-        articles = browser.find_elements_by_class_name('description')
-
+            body.send_keys(Keys.END)
 
         file = open("Data/berichten.csv", mode="w", encoding="utf-16")
-        for articles in articles:
-            articles = articles.text.replace(',', '').replace('\n', '')
-            file.write(articles+'\n')
+        for total_articles in total_articles:
+            total_articles = total_articles.text.replace(',', '').replace('\n', '')
+            file.write(total_articles+'\n')
         file.close()
-3
+
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
