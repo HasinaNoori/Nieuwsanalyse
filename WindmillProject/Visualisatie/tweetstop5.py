@@ -9,15 +9,19 @@ with open('../Data/tweets.csv', 'r', newline='') as csv_file:
     tree = ET.parse('../Data/nl-sentiment.xml')
     words = tree.findall('.//word')
 
+    bad_characters = ['.', ':', '!', '?']
     found_words = []
     for word in words:
         word = word.get('form').lower()
         for tweet in rows:
-            tweet_words = tweet['Content'].split(" ")
+            tweet = tweet['Content']
+            for char in bad_characters:
+                tweet = tweet.replace(char, '')
+            tweet_words = tweet.split(" ")
             for tweet_word in tweet_words:
                 if tweet_word.lower() == word:
                     found_words.append(word)
 
 
 counter = collections.Counter(found_words)
-print(counter.most_common())
+print(counter.most_common(5))
