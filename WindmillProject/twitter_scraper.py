@@ -56,7 +56,7 @@ def get_twitter():
         retweet_counts.append(counts[1])
 
     # Create and open csv
-    file = open("Data/tweests.csv", mode="w", encoding="utf-16")
+    file = open("Data/tweets.csv", mode="w", encoding="utf-16")
     # Write header to csv
     file.write(f'Origin,Timestamp,Content,Comment_count,Retweet_count\n')
     for i, tweet in enumerate(tweets):
