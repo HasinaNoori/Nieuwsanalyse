@@ -58,7 +58,7 @@ def get_twitter():
     # Create and open csv
     file = open("Data/tweets.csv", mode="w", encoding="utf-16")
     # Write header to csv
-    file.write(f'Origin,Timestamp,Content,Comment_count,Retweet_count\n')
+    file.write(f'Origin,Timestamp,Content,Title,Comment_count,Retweet_count\n')
     for i, tweet in enumerate(tweets):
         # Prepare data for csv
         date = dates[i].get_attribute("data-time")
@@ -69,7 +69,7 @@ def get_twitter():
             comment_count = 0
         if retweet_count is '':
             retweet_count = 0
-        file.write(f'twitter,{date},{tweet},{comment_count},{retweet_count}\n')
+        file.write(f'twitter,{date},{tweet},Null,{comment_count},{retweet_count}\n')
     file.close()
 
 

@@ -35,9 +35,9 @@ def get_nu_nl():
     print(url_list[-1])
 
     # Create and open csv
-    file = open("Data/nu_nl.csv", mode="w", encoding="utf-16")
+    file = open("Data/nus_nl.csv", mode="w", encoding="utf-16")
     # Write header to csv
-    file.write(f'Origin,Timestamp,Content,Title\n')
+    file.write(f'Origin,Timestamp,Content,Title,Comment_count,Retweet_count\n')
     for url in url_list:
         browser.get(url)
         # Get timestamp article
@@ -60,7 +60,7 @@ def get_nu_nl():
         # Write data to csv
         content = content_complete.replace(',', '').replace('\n', '')
         article_title = article_title.text.replace(',', '')
-        file.write(f'nu.nl,{timestamp},{content}, {article_title}\n')
+        file.write(f'nu.nl,{timestamp},{content},{article_title},0,0\n')
     file.close()
 
 
