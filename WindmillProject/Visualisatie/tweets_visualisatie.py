@@ -16,7 +16,7 @@ def plot_tweets():
         dates = map(lambda dt: dt.replace(hour=0, minute=0, second=0, microsecond=0),
                     # De map hieronder zet alle resultaten uit de vorige filter om in een datum.
                     # De seconden variabele is de eerste index uit elke rij -> u[0]
-                    map(lambda u: datetime.datetime.fromtimestamp(int(u[0])),
+                    map(lambda u: datetime.datetime.fromtimestamp(int(u[1])),
                         # De filter hieronder filtert alle lege rijen eruit.
                         filter(lambda i: i != [], reader)))
 
