@@ -47,7 +47,7 @@ def plot_nu_nl():
 
 
 def tweets_words_over_time():
-    keywords = ['windmolens', 'noordzee', 'nederland', 'groningen', 'duitsland', 'holland']
+    keywords = ['noordzee', 'nederland', 'groningen', 'duitsland', 'holland', 'utrecht']
     data = []
 
     with open('../Data/tweets.csv', 'r') as csv_file:
@@ -58,14 +58,23 @@ def tweets_words_over_time():
         for row in reader:
             if row:
                 for word in keywords:
-                    templist.append([word, datetime.datetime.fromtimestamp(int(row[1])).replace(hour=0, minute=0, second=0, microsecond=0), len(re.findall(word, row[2]))])
+                    templist.append([word, datetime.datetime.fromtimestamp(int(row[1])).replace(hour=0, minute=0, second=0, microsecond=0), len(re.findall('(?i)' + word, row[2]))])
 
-        # print(templist)
+        for word in keywords:
+            data.append([word, []])
 
-        print(templist)
+        for item in templist:
+            for x in data:
+                if x[0] is item[0] and item[2] > 0:
+                    x[1].append(item)
 
-        # x, y = np.unique(list(dates), return_counts=True)
-        # plt.plot(x, y)
+        for i,y in enumerate(data):
+            print(data[i][1])
+            dates = map(lambda x: x[1], data[i][1])
+            x, y = np.unique(list(dates), return_counts=True)
+            plt.scatter(x, y, label=data[i][0], marker='.')
+
+        plt.legend()
         plt.show()
 
 
