@@ -37,7 +37,7 @@ def plot_nu_nl():
 
         dates = map(lambda dt: dt.replace(hour=0, minute=0, second=0, microsecond=0),
                     map(lambda u: datetime.datetime.fromtimestamp(u),
-                        map(lambda o: int(o[0].split(".")[0]),
+                        map(lambda o: int(o[1].split(".")[0]),
                             filter(lambda i: i != [], reader))))
 
         x, y = np.unique(list(dates), return_counts=True)
@@ -47,4 +47,4 @@ def plot_nu_nl():
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
-    plot_tweets()
+    plot_nu_nl()
