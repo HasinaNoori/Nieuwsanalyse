@@ -3,6 +3,7 @@ import csv
 import datetime
 import numpy as np
 import seaborn as sns
+import re
 sns.set(style="darkgrid")
 
 
@@ -45,6 +46,29 @@ def plot_nu_nl():
         plt.show()
 
 
+def tweets_words_over_time():
+    keywords = ['windmolens', 'noordzee', 'nederland', 'groningen', 'duitsland', 'holland']
+    data = []
+
+    with open('../Data/tweets.csv', 'r') as csv_file:
+        reader = csv.reader((l.replace('\0', '') for l in csv_file))
+        templist = []
+        next(reader)
+
+        for row in reader:
+            if row:
+                for word in keywords:
+                    templist.append([word, datetime.datetime.fromtimestamp(int(row[1])).replace(hour=0, minute=0, second=0, microsecond=0), len(re.findall(word, row[2]))])
+
+        # print(templist)
+
+        print(templist)
+
+        # x, y = np.unique(list(dates), return_counts=True)
+        # plt.plot(x, y)
+        plt.show()
+
+
 if __name__ == "__main__":
     """ This is executed when run from the command line """
-    plot_nu_nl()
+    tweets_words_over_time()
