@@ -25,6 +25,9 @@ def plot_tweets():
         x, y = np.unique(list(dates), return_counts=True)
 
         # Vervolgens wordt er een plot van gemaakt.
+        plt.title('Tweet count over time')
+        plt.xlabel('Date')
+        plt.ylabel('Number of tweets')
         plt.plot(x, y)
 
         # Als laatste wordt de plot weergegeven.
@@ -42,6 +45,9 @@ def plot_nu_nl():
                             filter(lambda i: i != [], reader))))
 
         x, y = np.unique(list(dates), return_counts=True)
+        plt.title('Article count over time')
+        plt.xlabel('Date')
+        plt.ylabel('Number of articles')
         plt.plot(x, y)
         plt.show()
 
@@ -58,7 +64,7 @@ def tweets_words_over_time():
         for row in reader:
             if row:
                 for word in keywords:
-                    templist.append([word, datetime.datetime.fromtimestamp(int(row[1])).replace(hour=0, minute=0, second=0, microsecond=0), len(re.findall('(?i)' + word, row[2]))])
+                    templist.append([word, datetime.datetime.fromtimestamp(int(row[1])).replace(month=7,  day=1, hour=0, minute=0, second=0, microsecond=0), len(re.findall('(?i)' + word, row[2]))])
 
         for word in keywords:
             data.append([word, []])
@@ -68,12 +74,14 @@ def tweets_words_over_time():
                 if x[0] is item[0] and item[2] > 0:
                     x[1].append(item)
 
-        for i,y in enumerate(data):
+        for i, y in enumerate(data):
             print(data[i][1])
             dates = map(lambda x: x[1], data[i][1])
             x, y = np.unique(list(dates), return_counts=True)
-            plt.scatter(x, y, label=data[i][0], marker='.')
-
+            plt.plot(x, y, label=data[i][0], marker='.')
+        plt.title('Keyword usage over time')
+        plt.xlabel('Date')
+        plt.ylabel('Number of tweets')
         plt.legend()
         plt.show()
 
